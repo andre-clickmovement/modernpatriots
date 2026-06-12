@@ -20,6 +20,11 @@ const blobToken = process.env.BLOB_READ_WRITE_TOKEN
 
 export default buildConfig({
   serverURL: (process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000').replace(/\/$/, ''),
+  csrf: [
+    process.env.NEXT_PUBLIC_SERVER_URL,
+    process.env.NEXT_PUBLIC_SERVER_URL?.replace('://www.', '://'),
+    process.env.NEXT_PUBLIC_SERVER_URL?.replace('://', '://www.'),
+  ].filter(Boolean) as string[],
   admin: {
     user: Users.slug,
     importMap: {
